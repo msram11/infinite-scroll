@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.ramz.infinitescroll.recyclerview.FriendsListAdapter;
+import com.ramz.infinitescroll.widget.InfiniteScrollListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +45,17 @@ public class FBFriendsListActivity extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         // adding divider lines between views
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        RecyclerView.Adapter mAdapter = new FriendsListAdapter(friendsList);
+        final RecyclerView.Adapter mAdapter = new FriendsListAdapter(friendsList);
         // add the adapter
         recyclerView.setAdapter(mAdapter);
+        InfiniteScrollListener scrollListener = new InfiniteScrollListener((LinearLayoutManager) layoutManager) {
+            @Override
+            public void loadMore(int page, int totalItemsCount, RecyclerView view) {
+                // in our case, we need to show the list from the beginning
+                Log.i("FriendsListActivity", "need to load more data");
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        recyclerView.addOnScrollListener(scrollListener);
     }
 }
