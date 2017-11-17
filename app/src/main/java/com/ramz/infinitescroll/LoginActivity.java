@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     // UI references.
     private View mProgressView;
     private LoginButton mLoginButton;
+    private TextView mNoFriendsText;
 
     private CallbackManager callbackManager;
 
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton = findViewById(R.id.login_button);
         // progress dialog
         mProgressView = findViewById(R.id.login_progress);
+        mNoFriendsText = findViewById(R.id.no_friends_text);
         // TODO: Need to remove this permission, if not required
         mLoginButton.setReadPermissions("user_friends");
     }
@@ -59,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Log.d("Login -> onSuccess", "LoginResult is: " + loginResult.toString());
                 Intent intent = new Intent(LoginActivity.this, FBFriendsListActivity.class);
                 // retrieve logged-in user's friends
                 retrieveFriendsList(loginResult);
@@ -68,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     Log.d("LoginActivity", "Friends List is empty");
+                    // display text showing no friends available
+                    mNoFriendsText.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -119,4 +125,3 @@ public class LoginActivity extends AppCompatActivity {
                 }).executeAsync();
     }
 }
-

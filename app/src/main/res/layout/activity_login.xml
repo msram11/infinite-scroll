@@ -22,6 +22,16 @@
         android:gravity="center_vertical|center_horizontal"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/no_friends_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:text="@string/text_no_friends"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
         <com.facebook.login.widget.LoginButton
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
